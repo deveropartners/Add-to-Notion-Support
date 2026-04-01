@@ -67,7 +67,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="subtitle">Add to Notion for macOS and iOS — Effective March 5, 2026</p>
+    <p class="subtitle">Add to Notion for macOS and iOS — Effective March 31, 2026</p>
 
     <h2>Overview</h2>
     <p>Add to Notion is a lightweight client for the Notion API that lets you quickly add tasks and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: it connects directly to Notion's servers using your own API key, with no intermediary servers, no analytics, and no tracking.</p>
@@ -81,11 +81,12 @@
     </ul>
 
     <h2>Where Data Is Stored</h2>
-    <p>All data remains on your device with one exception:</p>
+    <p>All data remains on your device:</p>
     <ul>
-        <li><strong>API Key</strong> — Stored in your device's Keychain using Apple's Security framework. If you have iCloud Keychain enabled on your device, the API key may sync across your Apple devices through Apple's end-to-end encrypted iCloud Keychain service. This is controlled by your device settings, not by the app.</li>
-        <li><strong>App Preferences</strong> — Stored in a local file on your device. These are not synced or uploaded anywhere.</li>
-        <li><strong>Notion Content</strong> — Fetched on demand and held in memory while the app is open. It is not cached to disk.</li>
+        <li><strong>API Key</strong> — Stored in your device's Keychain using Apple's Security framework. The key is local to the device and is not synced via iCloud Keychain or any other service. On the same device, the key is shared between the main app and its extensions (share extension) through a secure Keychain access group.</li>
+        <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences are stored in a local file on your device. These are not synced or uploaded anywhere.</li>
+        <li><strong>Cached Task Data</strong> — The app caches a summary of your Notion database items (titles, status, dates, and property values) in local files on your device. This cache enables the iOS widget to display your items and allows the app to show data while loading. Cached data is not synced or uploaded anywhere.</li>
+        <li><strong>Recent Items</strong> — A list of recently added items (title, database, and timestamp) is stored locally for your convenience. This data is not synced or uploaded anywhere.</li>
     </ul>
 
     <h2>Network Connections</h2>
