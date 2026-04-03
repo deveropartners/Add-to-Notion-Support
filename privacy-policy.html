@@ -67,15 +67,17 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="subtitle">Add to Notion for macOS and iOS — Effective March 31, 2026</p>
+    <p class="subtitle">Add to Notion for macOS and iOS — Effective April 2, 2026</p>
 
     <h2>Overview</h2>
-    <p>Add to Notion is a lightweight client for the Notion API that lets you quickly add tasks and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: it connects directly to Notion's servers using your own API key, with no intermediary servers, no analytics, and no tracking.</p>
+    <p>Add to Notion is a lightweight client for the Notion API that lets you quickly add tasks and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: it connects directly to Notion's servers with no intermediary servers, no analytics, and no tracking.</p>
+    <p>The app supports two authentication methods: <strong>OAuth</strong> (recommended), which lets you authorize the app through Notion's official sign-in flow, and <strong>manual API key</strong>, where you provide your own Notion internal integration token. In both cases, your credentials are stored locally on your device and all communication goes directly to Notion — no data passes through any server operated by the developer.</p>
 
     <h2>What Data the App Uses</h2>
     <p>Add to Notion handles only the data necessary to function:</p>
     <ul>
-        <li><strong>Notion API Key</strong> — The internal integration token you provide to authenticate with Notion.</li>
+        <li><strong>OAuth Tokens</strong> — If you connect via OAuth, the app receives an access token and a refresh token from Notion after you authorize the app. These tokens allow the app to communicate with Notion on your behalf.</li>
+        <li><strong>Notion API Key</strong> (alternative method) — If you choose manual setup instead of OAuth, the internal integration token you provide to authenticate with Notion.</li>
         <li><strong>Notion Workspace Data</strong> — Database names, page titles, property values, and other content fetched from your Notion workspace via the Notion API.</li>
         <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences.</li>
     </ul>
@@ -83,28 +85,40 @@
     <h2>Where Data Is Stored</h2>
     <p>All data remains on your device:</p>
     <ul>
-        <li><strong>API Key</strong> — Stored in your device's Keychain using Apple's Security framework. The key is local to the device and is not synced via iCloud Keychain or any other service. On the same device, the key is shared between the main app and its extensions (share extension) through a secure Keychain access group.</li>
+        <li><strong>Authentication Credentials</strong> — Whether you use OAuth tokens or a manual API key, your credentials are stored in your device's Keychain using Apple's Security framework. Credentials are local to the device and are not synced via iCloud Keychain or any other service. On the same device, credentials are shared between the main app and its extensions (share extension) through a secure Keychain access group.</li>
         <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences are stored in a local file on your device. These are not synced or uploaded anywhere.</li>
         <li><strong>Cached Task Data</strong> — The app caches a summary of your Notion database items (titles, status, dates, and property values) in local files on your device. This cache enables the iOS widget to display your items and allows the app to show data while loading. Cached data is not synced or uploaded anywhere.</li>
         <li><strong>Recent Items</strong> — A list of recently added items (title, database, and timestamp) is stored locally for your convenience. This data is not synced or uploaded anywhere.</li>
     </ul>
 
     <h2>Network Connections</h2>
-    <p>The app communicates with exactly one external service: <strong>Notion's API</strong> at <code>api.notion.com</code>. All requests use HTTPS and are authenticated with your API key. The app does not contact any other servers, does not load remote resources, and does not include any analytics, crash reporting, or telemetry services.</p>
+    <p>During normal use, the app communicates with one external service: <strong>Notion's API</strong> at <code>api.notion.com</code>. All requests use HTTPS and are authenticated with your OAuth token or API key.</p>
+    <p>If you connect via OAuth, a one-time redirect during the initial authorization passes through a static page hosted on <strong>GitHub Pages</strong> (<code>deveropartners.github.io</code>). This page performs a client-side redirect to pass the authorization code back to the app. It does not log, store, or process any data. After this initial authorization, the app exchanges the code directly with Notion's servers for access tokens. No subsequent requests go through GitHub Pages.</p>
+    <p>The app does not include any analytics, crash reporting, or telemetry services.</p>
 
     <h2>Data We Do Not Collect</h2>
     <p>To be explicit about what does <em>not</em> happen:</p>
     <ul>
         <li>No data is sent to the developer or any third party.</li>
+        <li>No OAuth tokens or authorization codes are transmitted to or stored on any server operated by the developer.</li>
         <li>No analytics, usage tracking, or event logging occurs.</li>
         <li>No crash reports are transmitted.</li>
         <li>No device information, identifiers, or location data is collected.</li>
         <li>No advertising frameworks or tracking SDKs are included.</li>
-        <li>No accounts are created; the app uses your existing Notion integration token.</li>
+        <li>No accounts are created; the app uses either Notion's OAuth authorization flow or your own Notion integration token.</li>
     </ul>
 
     <h2>Third-Party Services</h2>
-    <p>The only third-party service the app interacts with is <strong>Notion</strong> (<a href="https://www.notion.so/privacy" target="_blank" rel="noopener">Notion's Privacy Policy</a>). Your use of the Notion API is subject to Notion's own terms and privacy policy. The developer of Add to Notion has no access to your Notion account or data.</p>
+    <p>The app interacts with the following third-party services:</p>
+    <ul>
+        <li><strong>Notion</strong> (<a href="https://www.notion.so/privacy" target="_blank" rel="noopener">Notion's Privacy Policy</a>) — All API requests and OAuth authorization are handled by Notion. Your use of the Notion API is subject to Notion's own terms and privacy policy.</li>
+        <li><strong>GitHub Pages</strong> — Used solely as a static redirect during OAuth authorization. The redirect page contains only client-side JavaScript that passes the authorization code back to the app. No data is collected, logged, or stored by this page.</li>
+    </ul>
+    <p>The developer of Add to Notion has no access to your Notion account or data.</p>
+
+    <h2>Revoking Access</h2>
+    <p>If you connected via OAuth, you can disconnect the app at any time by going to <strong>Notion Settings → My Connections</strong>, finding "Add to Notion," and clicking <strong>Disconnect</strong>. This immediately invalidates the app's access and refresh tokens. The app will prompt you to reconnect the next time you use it.</p>
+    <p>If you used a manual API key, you can revoke access by deleting or disabling the integration in your Notion workspace settings.</p>
 
     <h2>Children's Privacy</h2>
     <p>Add to Notion is not directed at children under the age of 13 and does not knowingly collect any personal information from children.</p>
