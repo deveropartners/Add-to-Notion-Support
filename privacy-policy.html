@@ -67,7 +67,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="subtitle">Inki for Notion (macOS and iOS) — Effective June 15, 2026</p>
+    <p class="subtitle">Inki for Notion (macOS and iOS) — Effective June 16, 2026</p>
 
     <h2>Overview</h2>
     <p>Inki is a lightweight client for the Notion API that lets you quickly add items and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: there is no Inki content server, the app includes no analytics, and it does no tracking. Your captures go directly between your device and Notion. The single exception is a one-time step during initial sign-in, described under <em>Network Connections</em> below.</p>
@@ -82,18 +82,19 @@
     </ul>
 
     <h2>Where Data Is Stored</h2>
-    <p>All data remains on your device:</p>
+    <p>Your data stays in places that are yours — on your device, and (for one small piece of data) in your own iCloud:</p>
     <ul>
         <li><strong>Authentication Credentials</strong> — Your OAuth access token is stored in your device's Keychain using Apple's Security framework. It is local to the device and is not synced via iCloud Keychain or any other service. On the same device, the token is shared between the main app and its extensions (the share extension) through a secure Keychain access group. It is removed from the Keychain immediately when you disconnect.</li>
         <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences are stored in a local file on your device. These are not synced or uploaded anywhere.</li>
         <li><strong>Cached Item Data</strong> — The app caches a summary of your Notion database items (titles, status, dates, and property values) in local files on your device. This cache enables the widgets to display your items and allows the app to show data while loading. Cached data is not synced or uploaded anywhere.</li>
         <li><strong>Recent Items</strong> — A list of recently added items (title, database, and timestamp) is stored locally for your convenience. This data is not synced or uploaded anywhere.</li>
+        <li><strong>Completion Stats &amp; Streaks</strong> — If you complete items in Inki, a small record of your completion counts and streaks syncs privately across your own Apple devices through Apple's iCloud (using Apple's key-value store). Only you can access this data; it never passes through or is stored on any server operated by the developer.</li>
     </ul>
 
     <h2>Network Connections</h2>
     <p>During normal use, the app communicates with one external service: <strong>Notion's API</strong> at <code>api.notion.com</code>. All requests use HTTPS and are authenticated with your OAuth token. The app does not include any analytics, crash reporting, or telemetry services.</p>
     <p>Because Notion's OAuth flow requires a confidential client secret that cannot be embedded safely in a distributed app, the <strong>one-time token exchange</strong> during sign-in is brokered by a small developer-operated service: a <strong>Cloudflare Worker</strong> at <code>inki-oauth.devero.workers.dev</code>. When you complete sign-in, this Worker exchanges Notion's one-time authorization code for an access token and forwards the token (and the workspace details Notion returns with it) back to your device. The Worker <strong>does not store</strong> your access token or any of your Notion content.</p>
-    <p>As with any web service, standard Cloudflare infrastructure access logs record the client IP address, timestamp, request path, and response status for the one-time sign-in requests. On a successful exchange, the Worker also logs the workspace ID and bot ID that Notion returns, for error diagnosis. These logs are standard infrastructure diagnostics and are not linked to your Notion account or to an Inki user identity. After this one-time sign-in, no further requests pass through the Worker — all subsequent communication goes directly between your device and Notion.</p>
+    <p>As with any web service, standard Cloudflare infrastructure access logs record the client IP address, timestamp, request path, and response status for the one-time sign-in requests. On a successful exchange, the Worker also logs the workspace ID and bot ID that Notion returns, for error diagnosis. Those IDs identify a Notion workspace, not you personally, and are never joined to your name, email, or any other identifying information. These logs are standard infrastructure diagnostics, kept only for error diagnosis on Cloudflare's default retention schedule, and are not used for tracking or analytics. After this one-time sign-in, no further requests pass through the Worker — all subsequent communication goes directly between your device and Notion.</p>
 
     <h2>Data We Do Not Collect</h2>
     <p>To be explicit about what does <em>not</em> happen:</p>
@@ -114,6 +115,9 @@
     </ul>
     <p>The developer of Inki has no access to your Notion account or to the content in your workspace.</p>
 
+    <h2>Purchases and Subscriptions</h2>
+    <p>Inki Pro is sold through Apple's App Store. All payments, subscriptions, and free trials are handled entirely by Apple — the developer never sees or stores your payment details, and your purchase is verified privately on your device via Apple's StoreKit. No purchase history is collected or stored on any server operated by the developer.</p>
+
     <h2>Revoking Access</h2>
     <p>You can disconnect Inki at any time from within the app, or by going to <strong>Notion Settings → My Connections</strong>, finding "Inki," and clicking <strong>Disconnect</strong>. This immediately invalidates the app's access token and removes it from your device's Keychain. The app will prompt you to reconnect the next time you use it.</p>
 
@@ -124,7 +128,7 @@
     <p>If this privacy policy is updated, the revised version will be posted at this URL with an updated effective date. Material changes will be noted at the top of the page.</p>
 
     <h2>Contact</h2>
-    <p>If you have questions about this privacy policy or the app's data practices, you can reach the developer at <a href="mailto:ops@deveropartners.com">ops@deveropartners.com</a>.</p>
+    <p>Inki is built and operated by <strong>David Parker (d.b.a. Devero Partners), Illinois, USA</strong>. If you have questions about this privacy policy or the app's data practices — or want to exercise a privacy right such as access or deletion — you can reach the developer at <a href="mailto:ops@deveropartners.com">ops@deveropartners.com</a>.</p>
 
     <div class="footer">
         <p>&copy; 2026 Devero Partners. Inki is an independent app and is not affiliated with or endorsed by Notion Labs, Inc.</p>
