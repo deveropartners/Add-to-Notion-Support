@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add to Notion — Privacy Policy</title>
+    <title>Inki for Notion — Privacy Policy</title>
     <style>
         :root {
             --text: #1a1a1a;
@@ -67,61 +67,58 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="subtitle">Add to Notion for macOS and iOS — Effective April 2, 2026</p>
+    <p class="subtitle">Inki for Notion (macOS and iOS) — Effective June 15, 2026</p>
 
     <h2>Overview</h2>
-    <p>Add to Notion is a lightweight client for the Notion API that lets you quickly add tasks and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: it connects directly to Notion's servers with no intermediary servers, no analytics, and no tracking.</p>
-    <p>The app supports two authentication methods: <strong>OAuth</strong> (recommended), which lets you authorize the app through Notion's official sign-in flow, and <strong>manual API key</strong>, where you provide your own Notion internal integration token. In both cases, your credentials are stored locally on your device and all communication goes directly to Notion — no data passes through any server operated by the developer.</p>
+    <p>Inki is a lightweight client for the Notion API that lets you quickly add items and manage pages from your menu bar (macOS) or home screen (iOS). Your privacy is fundamental to how this app is built: there is no Inki content server, the app includes no analytics, and it does no tracking. Your captures go directly between your device and Notion. The single exception is a one-time step during initial sign-in, described under <em>Network Connections</em> below.</p>
+    <p>You authorize Inki through Notion's official <strong>OAuth</strong> sign-in flow. During sign-in you choose exactly which workspaces and databases Inki may access. After you approve, Inki receives an access token that is stored locally in your device's Keychain; from then on, all communication goes directly between your device and Notion.</p>
 
     <h2>What Data the App Uses</h2>
-    <p>Add to Notion handles only the data necessary to function:</p>
+    <p>Inki handles only the data necessary to function:</p>
     <ul>
-        <li><strong>OAuth Tokens</strong> — If you connect via OAuth, the app receives an access token and a refresh token from Notion after you authorize the app. These tokens allow the app to communicate with Notion on your behalf.</li>
-        <li><strong>Notion API Key</strong> (alternative method) — If you choose manual setup instead of OAuth, the internal integration token you provide to authenticate with Notion.</li>
-        <li><strong>Notion Workspace Data</strong> — Database names, page titles, property values, and other content fetched from your Notion workspace via the Notion API.</li>
+        <li><strong>OAuth Token</strong> — When you connect via OAuth, the app receives an access token from Notion after you authorize it. This token lets the app communicate with Notion on your behalf.</li>
+        <li><strong>Notion Workspace Data</strong> — Database names, page titles, property values, and other content fetched from the workspaces and databases you have shared with the integration, via the Notion API.</li>
         <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences.</li>
     </ul>
 
     <h2>Where Data Is Stored</h2>
     <p>All data remains on your device:</p>
     <ul>
-        <li><strong>Authentication Credentials</strong> — Whether you use OAuth tokens or a manual API key, your credentials are stored in your device's Keychain using Apple's Security framework. Credentials are local to the device and are not synced via iCloud Keychain or any other service. On the same device, credentials are shared between the main app and its extensions (share extension) through a secure Keychain access group.</li>
+        <li><strong>Authentication Credentials</strong> — Your OAuth access token is stored in your device's Keychain using Apple's Security framework. It is local to the device and is not synced via iCloud Keychain or any other service. On the same device, the token is shared between the main app and its extensions (the share extension) through a secure Keychain access group. It is removed from the Keychain immediately when you disconnect.</li>
         <li><strong>App Preferences</strong> — Your selected databases, favorites, filter settings, and display preferences are stored in a local file on your device. These are not synced or uploaded anywhere.</li>
-        <li><strong>Cached Task Data</strong> — The app caches a summary of your Notion database items (titles, status, dates, and property values) in local files on your device. This cache enables the iOS widget to display your items and allows the app to show data while loading. Cached data is not synced or uploaded anywhere.</li>
+        <li><strong>Cached Item Data</strong> — The app caches a summary of your Notion database items (titles, status, dates, and property values) in local files on your device. This cache enables the widgets to display your items and allows the app to show data while loading. Cached data is not synced or uploaded anywhere.</li>
         <li><strong>Recent Items</strong> — A list of recently added items (title, database, and timestamp) is stored locally for your convenience. This data is not synced or uploaded anywhere.</li>
     </ul>
 
     <h2>Network Connections</h2>
-    <p>During normal use, the app communicates with one external service: <strong>Notion's API</strong> at <code>api.notion.com</code>. All requests use HTTPS and are authenticated with your OAuth token or API key.</p>
-    <p>If you connect via OAuth, a one-time redirect during the initial authorization passes through a static page hosted on <strong>GitHub Pages</strong> (<code>deveropartners.github.io</code>). This page performs a client-side redirect to pass the authorization code back to the app. It does not log, store, or process any data. After this initial authorization, the app exchanges the code directly with Notion's servers for access tokens. No subsequent requests go through GitHub Pages.</p>
-    <p>The app does not include any analytics, crash reporting, or telemetry services.</p>
+    <p>During normal use, the app communicates with one external service: <strong>Notion's API</strong> at <code>api.notion.com</code>. All requests use HTTPS and are authenticated with your OAuth token. The app does not include any analytics, crash reporting, or telemetry services.</p>
+    <p>Because Notion's OAuth flow requires a confidential client secret that cannot be embedded safely in a distributed app, the <strong>one-time token exchange</strong> during sign-in is brokered by a small developer-operated service: a <strong>Cloudflare Worker</strong> at <code>inki-oauth.devero.workers.dev</code>. When you complete sign-in, this Worker exchanges Notion's one-time authorization code for an access token and forwards the token (and the workspace details Notion returns with it) back to your device. The Worker <strong>does not store</strong> your access token or any of your Notion content.</p>
+    <p>As with any web service, standard Cloudflare infrastructure access logs record the client IP address, timestamp, request path, and response status for the one-time sign-in requests. On a successful exchange, the Worker also logs the workspace ID and bot ID that Notion returns, for error diagnosis. These logs are standard infrastructure diagnostics and are not linked to your Notion account or to an Inki user identity. After this one-time sign-in, no further requests pass through the Worker — all subsequent communication goes directly between your device and Notion.</p>
 
     <h2>Data We Do Not Collect</h2>
     <p>To be explicit about what does <em>not</em> happen:</p>
     <ul>
-        <li>No data is sent to the developer or any third party.</li>
-        <li>No OAuth tokens or authorization codes are transmitted to or stored on any server operated by the developer.</li>
+        <li>No Notion content (your pages, databases, or item data) is ever sent to the developer or any third party. It travels only between your device and Notion.</li>
+        <li>Your OAuth access token is never stored on any server operated by the developer. It passes through the sign-in broker only momentarily during the one-time token exchange and is not retained there.</li>
         <li>No analytics, usage tracking, or event logging occurs.</li>
         <li>No crash reports are transmitted.</li>
-        <li>No device information, identifiers, or location data is collected.</li>
         <li>No advertising frameworks or tracking SDKs are included.</li>
-        <li>No accounts are created; the app uses either Notion's OAuth authorization flow or your own Notion integration token.</li>
+        <li>No accounts are created; the app uses Notion's official OAuth authorization flow.</li>
     </ul>
 
     <h2>Third-Party Services</h2>
     <p>The app interacts with the following third-party services:</p>
     <ul>
         <li><strong>Notion</strong> (<a href="https://www.notion.so/privacy" target="_blank" rel="noopener">Notion's Privacy Policy</a>) — All API requests and OAuth authorization are handled by Notion. Your use of the Notion API is subject to Notion's own terms and privacy policy.</li>
-        <li><strong>GitHub Pages</strong> — Used solely as a static redirect during OAuth authorization. The redirect page contains only client-side JavaScript that passes the authorization code back to the app. No data is collected, logged, or stored by this page.</li>
+        <li><strong>Cloudflare</strong> (<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's Privacy Policy</a>) — Hosts the developer-operated Worker that brokers the one-time OAuth token exchange, as described under <em>Network Connections</em>. Cloudflare processes only the standard infrastructure access logs noted above.</li>
     </ul>
-    <p>The developer of Add to Notion has no access to your Notion account or data.</p>
+    <p>The developer of Inki has no access to your Notion account or to the content in your workspace.</p>
 
     <h2>Revoking Access</h2>
-    <p>If you connected via OAuth, you can disconnect the app at any time by going to <strong>Notion Settings → My Connections</strong>, finding "Add to Notion," and clicking <strong>Disconnect</strong>. This immediately invalidates the app's access and refresh tokens. The app will prompt you to reconnect the next time you use it.</p>
-    <p>If you used a manual API key, you can revoke access by deleting or disabling the integration in your Notion workspace settings.</p>
+    <p>You can disconnect Inki at any time from within the app, or by going to <strong>Notion Settings → My Connections</strong>, finding "Inki," and clicking <strong>Disconnect</strong>. This immediately invalidates the app's access token and removes it from your device's Keychain. The app will prompt you to reconnect the next time you use it.</p>
 
     <h2>Children's Privacy</h2>
-    <p>Add to Notion is not directed at children under the age of 13 and does not knowingly collect any personal information from children.</p>
+    <p>Inki is intended for general audiences and is not directed at children under the age of 13. It does not knowingly collect any personal information from children.</p>
 
     <h2>Changes to This Policy</h2>
     <p>If this privacy policy is updated, the revised version will be posted at this URL with an updated effective date. Material changes will be noted at the top of the page.</p>
@@ -130,7 +127,7 @@
     <p>If you have questions about this privacy policy or the app's data practices, you can reach the developer at <a href="mailto:ops@deveropartners.com">ops@deveropartners.com</a>.</p>
 
     <div class="footer">
-        <p>&copy; 2026 Devero Partners. Add to Notion is not affiliated with or endorsed by Notion Labs, Inc.</p>
+        <p>&copy; 2026 Devero Partners. Inki is an independent app and is not affiliated with or endorsed by Notion Labs, Inc.</p>
     </div>
 </body>
 </html>
